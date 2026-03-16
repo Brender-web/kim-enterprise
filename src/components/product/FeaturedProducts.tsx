@@ -25,7 +25,7 @@ export function FeaturedProducts() {
         if (Array.isArray(data)) {
           setProducts(data)
         } else {
-          console.error('Featured Products Error:', data)
+          console.error('Featured Products Error:', JSON.stringify(data, null, 2))
           setProducts([])
         }
       })
