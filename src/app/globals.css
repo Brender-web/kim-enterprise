@@ -1,20 +1,9 @@
 @import "tailwindcss";
 
 @layer base {
-  :root {
-    --background: #ffffff;
-    --foreground: #0f172a; /* Slate 900 */
-    --muted: #f8fafc; /* Slate 50 */
-    --muted-foreground: #64748b; /* Slate 500 */
-    --primary: #0055ff; /* True Blue */
-    --primary-foreground: #ffffff;
-    --border: #e2e8f0; /* Slate 200 */
-    --radius: 0.75rem;
-  }
-
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: #ffffff;
+    color: #0f172a;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
   }
@@ -22,15 +11,14 @@
   h1, h2, h3, h4, h5, h6 {
     color: #0f172a;
     font-weight: 700;
-    letter-spacing: -0.025em;
   }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-primary: var(--primary);
-  --radius-xl: var(--radius);
+/* Ensure no dark mode overrides the background if not explicitly requested */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #ffffff;
+    color: #0f172a;
+  }
 }
 

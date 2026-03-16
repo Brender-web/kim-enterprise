@@ -15,13 +15,13 @@ const QUICK_CATEGORIES = [
 export function Categories() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-end mb-8">
+      <div className="flex justify-between items-end mb-10">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Shop by Category</h2>
-          <p className="mt-2 text-gray-600">Find exactly what you're looking for</p>
+          <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">Shop by Category</h2>
+          <p className="mt-2 text-lg text-slate-500 font-medium">Find exactly what you're looking for</p>
         </div>
-        <Link href="/categories" className="text-blue-600 hover:text-blue-700 font-medium">
-          See All →
+        <Link href="/categories" className="text-blue-600 hover:text-blue-700 font-bold uppercase tracking-widest text-xs border-b-2 border-blue-600 pb-1">
+          See All Categories
         </Link>
       </div>
 

@@ -26,13 +26,13 @@ export function FeaturedProducts() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-end mb-8">
+      <div className="flex justify-between items-end mb-10">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Featured Products</h2>
-          <p className="mt-2 text-gray-600">Handpicked items just for you</p>
+          <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">Featured Products</h2>
+          <p className="mt-2 text-lg text-slate-500 font-medium">Handpicked items just for you</p>
         </div>
-        <Link href="/products" className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
-          View All →
+        <Link href="/products" className="text-blue-600 hover:text-blue-700 font-bold uppercase tracking-widest text-xs border-b-2 border-blue-600 pb-1 translate-y-[-4px]">
+          View Full Catalog
         </Link>
       </div>
 

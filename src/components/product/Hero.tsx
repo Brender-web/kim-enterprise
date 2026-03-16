@@ -8,7 +8,7 @@ import { Button } from '@/components/ui'
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-slate-50 border-b border-slate-200">
+    <section className="relative overflow-hidden bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
