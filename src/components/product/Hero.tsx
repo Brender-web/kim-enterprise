@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Truck, Shield, Clock } from 'lucide-react'
+import { Button } from '@/components/ui'
+
 
 export function Hero() {
   return (
@@ -21,19 +23,17 @@ export function Hero() {
               Discover quality products with fast delivery across East Africa and international shipping.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link 
-                href="/products"
-                className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition transform hover:scale-105"
-              >
-                Shop Now
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-              <Link 
-                href="/categories"
-                className="inline-flex items-center px-8 py-4 text-lg font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-full hover:bg-blue-50 transition"
-              >
-                Browse Categories
-              </Link>
+              <Button size="lg" rounded="full" asChild shadow-xl>
+                <Link href="/products">
+                  Shop Now
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" rounded="full" asChild>
+                <Link href="/categories">
+                  Browse Categories
+                </Link>
+              </Button>
             </div>
             
             <div className="mt-12 flex items-center space-x-8 text-sm text-gray-500">
