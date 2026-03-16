@@ -23,7 +23,7 @@ export function Hero() {
               Discover quality products with fast delivery across East Africa and international shipping.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button size="lg" rounded="full" asChild shadow-xl>
+              <Button size="lg" rounded="full" asChild className="shadow-xl">
                 <Link href="/products">
                   Shop Now
                   <ArrowRight className="ml-2 w-5 h-5" />
