@@ -21,7 +21,18 @@ export function FeaturedProducts() {
   useEffect(() => {
     fetch('/api/products?featured=true')
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data => {
+        if (Array.isArray(data)) {
+          setProducts(data)
+        } else {
+          console.error('Featured Products Error:', data)
+          setProducts([])
+        }
+      })
+      .catch(err => {
+        console.error('Fetch error:', err)
+        setProducts([])
+      })
   }, [])
 
   return (

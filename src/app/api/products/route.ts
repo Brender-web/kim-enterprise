@@ -6,25 +6,33 @@ import { productSchema } from "@/validators/product.schema"
 import { ProductService } from "@/services/product.service"
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const category = searchParams.get("category")
-  const featured = searchParams.get("featured")
+  try {
+    const { searchParams } = new URL(request.url)
+    const category = searchParams.get("category")
+    const featured = searchParams.get("featured")
 
-  const products = await prisma.product.findMany({
-    where: {
-      ...(category && { category: category as any }),
-      ...(featured === "true" && { featured: true }),
-    },
-    include: {
-      reviews: {
-        select: { rating: true }
+    const products = await prisma.product.findMany({
+      where: {
+        ...(category && { category: category as any }),
+        ...(featured === "true" && { featured: true }),
+      },
+      include: {
+        reviews: {
+          select: { rating: true }
+        }
       }
-    }
-  })
+    })
 
-  const productsWithRating = ProductService.formatProductsWithRating(products as any)
+    const productsWithRating = ProductService.formatProductsWithRating(products as any)
 
-  return NextResponse.json(productsWithRating)
+    return NextResponse.json(productsWithRating)
+  } catch (error: any) {
+    console.error("Products Fetch Error:", error)
+    return NextResponse.json({ 
+      error: "Failed to fetch products", 
+      details: error.message || "Unknown error"
+    }, { status: 500 })
+  }
 }
 
 

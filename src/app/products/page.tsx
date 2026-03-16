@@ -5,20 +5,42 @@ import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductFilters } from '@/components/product/ProductFilters'
 import { Search } from 'lucide-react'
 
+interface Product {
+  id: string
+  name: string
+  price: number
+  currency: string
+  images: string[]
+  category: string
+  averageRating: number
+  reviewCount: number
+}
+
 export default function ProductsPage() {
-  const [products, setProducts] = useState([])
-  const [filteredProducts, setFilteredProducts] = useState([])
+  const [products, setProducts] = useState<Product[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [category, setCategory] = useState('ALL')
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     fetch('/api/products')
       .then(res => res.json())
       .then(data => {
-        setProducts(data)
-        setFilteredProducts(data)
-        setLoading(true)
+        if (Array.isArray(data)) {
+          setProducts(data)
+          setFilteredProducts(data)
+        } else {
+          console.error('Products Fetch Error:', data)
+          setProducts([])
+          setFilteredProducts([])
+        }
+      })
+      .catch(err => {
+        console.error('Fetch error:', err)
+        setProducts([])
+        setFilteredProducts([])
       })
       .finally(() => setLoading(false))
   }, [])
