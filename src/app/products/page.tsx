@@ -41,19 +41,21 @@ export default function ProductsPage() {
   }, [category, search, products])
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900">Our Collection</h1>
-          <p className="mt-2 text-gray-600">Premium products curated for quality and style.</p>
+          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">Our Collection</h1>
+          <p className="mt-3 text-lg text-slate-500 max-w-xl leading-relaxed">
+            Curated premium products for those who value quality and style. Browse our latest arrivals.
+          </p>
         </div>
         
-        <div className="relative w-full md:w-96">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <div className="relative w-full md:w-96 group">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 transition-colors" />
           <input
             type="text"
-            placeholder="Search products..."
-            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium"
+            placeholder="Search our catalog..."
+            className="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:bg-white focus:border-blue-500 transition-all font-bold text-slate-900 placeholder:text-slate-400 border-none shadow-sm"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

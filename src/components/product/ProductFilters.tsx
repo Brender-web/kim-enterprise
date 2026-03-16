@@ -22,7 +22,7 @@ interface ProductFiltersProps {
 
 export function ProductFilters({ activeCategory, onCategoryChange }: ProductFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2 mb-8">
+    <div className="flex flex-wrap gap-3 mb-12">
       {CATEGORIES.map((category) => (
         <button
           key={category}
@@ -32,11 +32,13 @@ export function ProductFilters({ activeCategory, onCategoryChange }: ProductFilt
           <Badge
             variant={activeCategory === category ? "default" : "secondary"}
             className={cn(
-              "px-4 py-2 cursor-pointer hover:bg-blue-500 hover:text-white transition-colors",
-              activeCategory === category && "bg-blue-600 text-white"
+              "px-5 py-2.5 cursor-pointer transition-all font-bold text-xs uppercase tracking-widest border border-transparent",
+              activeCategory === category 
+                ? "bg-slate-900 text-white shadow-lg shadow-slate-900/10 scale-105" 
+                : "bg-white text-slate-500 border-slate-200 hover:border-slate-400 hover:text-slate-900 hover:bg-slate-50"
             )}
           >
-            {category.charAt(0) + category.slice(1).toLowerCase()}
+            {category}
           </Badge>
         </button>
       ))}
