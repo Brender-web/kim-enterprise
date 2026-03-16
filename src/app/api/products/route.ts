@@ -1,15 +1,9 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Prisma } from "@prisma/client"
-
-// Define the type for product with reviews
-type ProductWithReviews = Prisma.ProductGetPayload<{
-  include: {
-    reviews: {
-      select: { rating: true }
-    }
-  }
-}>
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
+import { productSchema } from "@/validators/product.schema"
+import { ProductService } from "@/services/product.service"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -28,24 +22,34 @@ export async function GET(request: Request) {
     }
   })
 
-  // Calculate average rating with explicit type
-  const productsWithRating = products.map((product: ProductWithReviews) => ({
-    ...product,
-    averageRating: product.reviews.length > 0
-      ? product.reviews.reduce((acc: any, r: { rating: any }) => acc + r.rating, 0) / product.reviews.length
-      : 0,
-    reviewCount: product.reviews.length
-  }))
+  const productsWithRating = ProductService.formatProductsWithRating(products as any)
 
   return NextResponse.json(productsWithRating)
 }
 
+
 export async function POST(request: Request) {
-  const body = await request.json()
-  
-  const product = await prisma.product.create({
-    data: body
-  })
-  
-  return NextResponse.json(product, { status: 201 })
+  try {
+    const session = await getServerSession(authOptions)
+
+    if (!session || session.user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Access denied. Admin only." }, { status: 403 })
+    }
+
+    const body = await request.json()
+    const validation = productSchema.safeParse(body)
+
+    if (!validation.success) {
+      return NextResponse.json({ error: "Invalid data", details: validation.error.format() }, { status: 400 })
+    }
+
+    const product = await prisma.product.create({
+      data: validation.data
+    })
+    
+    return NextResponse.json(product, { status: 201 })
+  } catch (error: any) {
+    console.error("Product Creation Error:", error)
+    return NextResponse.json({ error: "Failed to create product" }, { status: 500 })
+  }
 }
