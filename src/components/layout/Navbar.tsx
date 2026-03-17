@@ -15,7 +15,7 @@ export function Navbar() {
 
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -60,7 +60,13 @@ export function Navbar() {
             </Link>
 
             {session ? (
-              <div className="flex items-center space-x-4 pl-4 border-l border-slate-100">
+              <div className="flex items-center space-x-6 pl-4 border-l border-slate-100">
+                <Link href="/seller/register" className="text-xs font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 transition-colors">
+                  Sell on KIM
+                </Link>
+                <Link href="/orders" className="text-xs font-black uppercase tracking-widest text-slate-600 hover:text-slate-900 transition-colors">
+                  My Orders
+                </Link>
                 <span className="text-sm font-bold text-slate-900">{session.user?.name}</span>
                 <button 
                   onClick={() => signOut()}
