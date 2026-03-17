@@ -46,12 +46,23 @@ KIM Enterprise uses MongoDB for its flexible schema and scalability.
 2.  Start the `mongod` service.
 3.  Your default connection string will likely be: `mongodb://localhost:27017/kim_enterprise`
 
+**Option C: Docker (Fastest Setup)**
+If you have Docker installed, you can spin up a MongoDB instance instantly:
+1.  Run the following command in the root directory:
+    ```bash
+    docker-compose up -d
+    ```
+2.  This will create a persistent MongoDB container running on port `27017`.
+3.  Your connection string will be: `mongodb://localhost:27017/kim_enterprise`
+
 ### 4. Environment Configuration
 Create a `.env` file in the root directory and add your credentials (use `.env.example` as a template):
 
 ```env
 # Database (IMPORTANT: Must be a MongoDB string)
-DATABASE_URL="mongodb+srv://<user>:<password>@cluster.mongodb.net/kim_enterprise?retryWrites=true&w=majority"
+# For Docker/Local: "mongodb://localhost:27017/kim_enterprise"
+# For Atlas: "mongodb+srv://<user>:<password>@cluster.mongodb.net/kim_enterprise?retryWrites=true&w=majority"
+DATABASE_URL="mongodb://localhost:27017/kim_enterprise"
 
 # Next Auth
 NEXTAUTH_SECRET="your-generated-secret"
