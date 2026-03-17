@@ -23,14 +23,15 @@ export async function GET(request: Request) {
       }
     })
 
-    const productsWithRating = ProductService.formatProductsWithRating(products as any)
+    const productsWithRating = ProductService.formatProductsWithRating(products)
 
     return NextResponse.json(productsWithRating)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Products Fetch Error:", error)
+    const message = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json({ 
       error: "Failed to fetch products", 
-      details: error.message || "Unknown error"
+      details: message
     }, { status: 500 })
   }
 }
@@ -40,8 +41,8 @@ export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions)
 
-    if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Access denied. Admin only." }, { status: 403 })
+    if (!session || (session.user.role !== "ADMIN" && session.user.role !== "SELLER")) {
+      return NextResponse.json({ error: "Access denied. Admin or Seller only." }, { status: 403 })
     }
 
     const body = await request.json()
@@ -52,7 +53,10 @@ export async function POST(request: Request) {
     }
 
     const product = await prisma.product.create({
-      data: validation.data
+      data: {
+        ...validation.data,
+        sellerId: session.user.id
+      }
     })
     
     return NextResponse.json(product, { status: 201 })
