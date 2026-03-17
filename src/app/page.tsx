@@ -1,7 +1,8 @@
-import { Hero } from '@/components/Hero'
-import { FeaturedProducts } from '@/components/FeaturedProducts'
-import { Categories } from '@/components/Categories'
-import { Features } from '@/components/Features'
+import { Hero } from '@/components/product/Hero'
+import { FeaturedProducts } from '@/components/product/FeaturedProducts'
+import { Categories } from '@/components/product/Categories'
+import { Features } from '@/components/ui/Features'
+
 
 export default function Home() {
   return (
