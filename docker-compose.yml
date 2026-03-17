@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: kim-enterprise-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - kim-network
+    restart: always
+
+networks:
+  kim-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
