@@ -22,13 +22,13 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) return null
         
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email }
+          where: { email: credentials.email },
         })
         
-        if (!user || !user.password) return null  // Check password exists
+        if (!user || !(user as any).password) return null // Check password exists
         
         // Compare hashed passwords
-        const isValid = await bcrypt.compare(credentials.password, user.password)
+        const isValid = await bcrypt.compare(credentials.password, (user as any).password)
         
         if (!isValid) return null  // Return null if password doesn't match
         
