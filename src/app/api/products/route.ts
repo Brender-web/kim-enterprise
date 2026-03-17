@@ -1,15 +1,5 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Prisma } from "@prisma/client"
-
-// Define the type for product with reviews
-type ProductWithReviews = Prisma.ProductGetPayload<{
-  include: {
-    reviews: {
-      select: { rating: true }
-    }
-  }
-}>
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -28,24 +18,14 @@ export async function GET(request: Request) {
     }
   })
 
-  // Calculate average rating with explicit type
-  const productsWithRating = products.map((product: ProductWithReviews) => ({
+  // TypeScript will infer the type automatically
+  const productsWithRating = products.map((product: { reviews: any[] }) => ({
     ...product,
     averageRating: product.reviews.length > 0
-      ? product.reviews.reduce((acc: any, r: { rating: any }) => acc + r.rating, 0) / product.reviews.length
+      ? product.reviews.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / product.reviews.length
       : 0,
     reviewCount: product.reviews.length
   }))
 
   return NextResponse.json(productsWithRating)
-}
-
-export async function POST(request: Request) {
-  const body = await request.json()
-  
-  const product = await prisma.product.create({
-    data: body
-  })
-  
-  return NextResponse.json(product, { status: 201 })
 }
