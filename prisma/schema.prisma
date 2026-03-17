@@ -114,6 +114,7 @@ enum Category {
   FASHION
   HOME
   BEAUTY
+  ACCESSORIES
   SPORTS
   FOOD
   BOOKS
