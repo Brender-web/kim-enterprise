@@ -10,13 +10,8 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
-<<<<<<< HEAD
-    "@prisma/client": "^6.19.2",
-=======
-    "@prisma/adapter-pg": "^7.5.0",
-    "@prisma/client": "^7.5.0",
+    "@prisma/client": "6.19.2",
     "@radix-ui/react-slot": "^1.2.4",
->>>>>>> 0e6df8f0532885c556a4d7b722796d33e8a8225d
     "@stripe/stripe-js": "^8.9.0",
     "axios": "^1.13.6",
     "bcrypt": "^6.0.0",
@@ -24,23 +19,16 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.35.2",
     "lucide-react": "^0.577.0",
-    "next": "^14.2.21",
+    "next": "16.1.6",
     "next-auth": "^4.24.13",
-<<<<<<< HEAD
-    "prisma": "^6.19.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "stripe": "^20.4.1"
-=======
     "pg": "^8.20.0",
-    "prisma": "^7.5.0",
+    "prisma": "6.19.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "stripe": "^20.4.1",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6",
     "zustand": "^5.0.12"
->>>>>>> 0e6df8f0532885c556a4d7b722796d33e8a8225d
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

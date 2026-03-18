@@ -22,6 +22,8 @@ export default function ProductsPage() {
   const [category, setCategory] = useState('ALL')
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
+  const [sortBy, setSortBy] = useState('DEFAULT')
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000])
 
   useEffect(() => {
     setLoading(true)
@@ -46,21 +48,35 @@ export default function ProductsPage() {
   }, [])
 
   useEffect(() => {
-    let result = products
+    let result = [...products]
     
+    // Category Filter
     if (category !== 'ALL') {
       result = result.filter((p: any) => p.category === category)
     }
     
+    // Search Filter
     if (search) {
       result = result.filter((p: any) => 
         p.name.toLowerCase().includes(search.toLowerCase()) ||
         p.description?.toLowerCase().includes(search.toLowerCase())
       )
     }
+
+    // Price Filter
+    result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1])
+
+    // Sorting
+    if (sortBy === 'PRICE_ASC') {
+      result.sort((a, b) => a.price - b.price)
+    } else if (sortBy === 'PRICE_DESC') {
+      result.sort((a, b) => b.price - a.price)
+    } else if (sortBy === 'RATING') {
+      result.sort((a, b) => b.averageRating - a.averageRating)
+    }
     
     setFilteredProducts(result)
-  }, [category, search, products])
+  }, [category, search, products, sortBy, priceRange])
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -84,7 +100,12 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <ProductFilters activeCategory={category} onCategoryChange={setCategory} />
+      <ProductFilters 
+        activeCategory={category} 
+        onCategoryChange={setCategory} 
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+      />
 
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

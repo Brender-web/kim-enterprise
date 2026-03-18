@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-<<<<<<< HEAD
-=======
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { productSchema } from "@/validators/product.schema"
 import { ProductService } from "@/services/product.service"
->>>>>>> 0e6df8f0532885c556a4d7b722796d33e8a8225d
 
 export async function GET(request: Request) {
   try {
@@ -26,26 +23,15 @@ export async function GET(request: Request) {
       }
     })
 
-<<<<<<< HEAD
-  // TypeScript will infer the type automatically
-  const productsWithRating = products.map((product: { reviews: any[] }) => ({
-    ...product,
-    averageRating: product.reviews.length > 0
-      ? product.reviews.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / product.reviews.length
-      : 0,
-    reviewCount: product.reviews.length
-  }))
-
-  return NextResponse.json(productsWithRating)
-=======
-    const productsWithRating = ProductService.formatProductsWithRating(products as any)
+    const productsWithRating = ProductService.formatProductsWithRating(products)
 
     return NextResponse.json(productsWithRating)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Products Fetch Error:", error)
+    const message = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json({ 
       error: "Failed to fetch products", 
-      details: error.message || "Unknown error"
+      details: message
     }, { status: 500 })
   }
 }
@@ -55,8 +41,8 @@ export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions)
 
-    if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Access denied. Admin only." }, { status: 403 })
+    if (!session || (session.user.role !== "ADMIN" && session.user.role !== "SELLER")) {
+      return NextResponse.json({ error: "Access denied. Admin or Seller only." }, { status: 403 })
     }
 
     const body = await request.json()
@@ -67,7 +53,10 @@ export async function POST(request: Request) {
     }
 
     const product = await prisma.product.create({
-      data: validation.data
+      data: {
+        ...validation.data,
+        sellerId: session.user.id
+      }
     })
     
     return NextResponse.json(product, { status: 201 })
@@ -75,5 +64,4 @@ export async function POST(request: Request) {
     console.error("Product Creation Error:", error)
     return NextResponse.json({ error: "Failed to create product" }, { status: 500 })
   }
->>>>>>> 0e6df8f0532885c556a4d7b722796d33e8a8225d
 }
